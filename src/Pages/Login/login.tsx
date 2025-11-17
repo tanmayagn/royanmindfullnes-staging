@@ -214,18 +214,24 @@ if (redirect === "calendly") {
 
  const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
-      // ✅ Decode Google credential to extract user info
+
+        
       const decoded: any = jwtDecode(credentialResponse.credential);
+       const timestamp = Date.now();
+  const safeName = `${decoded.given_name}-${decoded.family_name}`.replace(/\s+/g, "-").toLowerCase();
+  const meetingRoom = `deedee-user-${safeName}-${timestamp}`;
+  const meetingLink = `https://meet.jit.si/${meetingRoom}`;
       const userData = {
         email: decoded.email,
         family_name: decoded.family_name,
         given_name: decoded.given_name,
         email_verified: decoded.email_verified,
+        meeting_link: meetingLink, 
       };
 
      
 
-      // ✅ Send data to backend
+   
       const response = await axios.post(
         "https://deedee-unchainable-optionally.ngrok-free.dev/google_login",
         { user: userData },
