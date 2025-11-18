@@ -33,61 +33,56 @@ import { HowItWorks } from "./Sections/HowItWorks";
 import axios from "axios";
 import { WhoisTakingServices } from "./Sections/WhoisTakingServices";
 import MentalTrainingSelector from "./Sections/Questionnaire";
-import WaveDivider from "./WaveDivider"; 
-
+import WaveDivider from "./WaveDivider";
 
 const LandingPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [location, setLocation] = useState(""); // State to store selected location
-  const [userLocation, setUserLocation] = useState<{
-    lat: number | null;
-    lng: number | null;
-  }>({
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [userLocation, setUserLocation] = useState({
     lat: null,
     lng: null,
   });
 
-  // Use useEffect to show the modal after 7 seconds
+  // Show modal only if user has NOT submitted before
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsModalOpen(true);
-    }, 7000); // 7 seconds delay
+    const hasProvidedLocation = localStorage.getItem("hasProvidedLocation");
 
-    return () => clearTimeout(timer);
+    if (!hasProvidedLocation) {
+      const timer = setTimeout(() => {
+        setIsModalOpen(true);
+      }, 7000);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const handleClose = () => {
+    // Store flag so popup never shows again
+    localStorage.setItem("hasProvidedLocation", "true");
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-
-          console.log("User Location:", { lat, lng });
-
+          const lat:any = position.coords.latitude;
+          const lng:any = position.coords.longitude;
           setUserLocation({ lat, lng });
+          console.log("User Location:", { lat, lng });
         },
         (error) => {
           console.error("Error getting location:", error);
         }
       );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
     }
 
     setIsModalOpen(false);
   };
 
-  const handleLocationChange = (event: any) => {
+  const handleLocationChange = (event:any) => {
     setLocation(event.target.value);
   };
 
   return (
-    <div
-      style={{
-        minHeight: "calc(100vh - 180px)",
-      }}
-    >
+    <div style={{ minHeight: "calc(100vh - 180px)" }}>
       <SEO
         title="Home Page | Royal MindFulness"
         description="Home page where user can see about Our website"
@@ -101,64 +96,23 @@ const LandingPage = () => {
         image="https://example.com/session-page-image.jpg"
         url="https://www.royalmindfulness.com"
       />
+
       <ToastContainer />
       <Slider />
-     
-      {/* <Hero /> */}
 
-      {/* <Offerings /> */}
-
-      {/* Who is taking our services */}
       <WhoisTakingServices />
-
-      {/* How it works */}
       <HowItWorks />
-
-      {/* Questionnaire */}
       <MentalTrainingSelector />
-
-      {/* Comparison */}
       <Comparison />
-
-      {/* Faq */}
       <FAQSection />
-
-      {/* Second Section */}
       <SecondSection />
-
-      {/* Third Section */}
-      {/* <ThirdSection /> */}
-
-      {/* <Offerings /> */}
-
-      {/* Fourth Section */}
-      {/* <FourthSection /> */}
-
-      {/* Fifth Section */}
-      {/* <FifthSection /> */}
-
-      {/* Sixth */}
-      {/* <SixthSection /> */}
-
-      {/* Eighth */}
       <TrainerCard />
-
-      {/*Quiz Landing Page  */}
       <QuizLanding />
-
-      {/* Seventh */}
       <SeventhSection />
-
-      {/*9 signup */}
       <SignupCard />
-
-      {/* 10 Testimonials */}
-      {/* <Testimonials /> */}
-
-      {/* Feedback */}
       <FeedbackSection />
 
-      {/* Location Modal */}
+      {/* Modal */}
       <Modal
         open={isModalOpen}
         onClose={handleClose}
@@ -169,8 +123,8 @@ const LandingPage = () => {
         disableScrollLock
         BackdropProps={{
           sx: {
-            backdropFilter: "blur(8px)", // Apply blur effect to the background
-            backgroundColor: "rgba(0, 0, 0, 0.3)", // Optional: Dim the background
+            backdropFilter: "blur(8px)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
           },
         }}
       >
@@ -189,7 +143,7 @@ const LandingPage = () => {
         >
           <IconButton
             aria-label="close"
-            onClick={handleClose} // Close the modal when clicked
+            onClick={handleClose}
             sx={{
               position: "absolute",
               top: 8,
@@ -199,18 +153,16 @@ const LandingPage = () => {
           >
             <CloseIcon />
           </IconButton>
-          <Typography
-            id="location-modal-title"
-            variant="h6"
-            component="h2"
-            gutterBottom
-          >
+
+          <Typography variant="h6" gutterBottom>
             Help Us Serve You Better
           </Typography>
-          <Typography id="location-modal-description" sx={{ mb: 2 }}>
+
+          <Typography sx={{ mb: 2 }}>
             Please select your country so we can provide you with the best
             service.
           </Typography>
+
           <FormControl fullWidth>
             <Select
               value={location}
@@ -227,6 +179,7 @@ const LandingPage = () => {
               <MenuItem value="Italy">Italy</MenuItem>
             </Select>
           </FormControl>
+
           <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
             <Button
               onClick={handleClose}
