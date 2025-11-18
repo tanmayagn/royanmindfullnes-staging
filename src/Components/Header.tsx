@@ -236,7 +236,7 @@ const Header: React.FC = () => {
               backgroundColor: "transparent",
               transition: "background-color 0.3s ease",
               zIndex: 10,
-              padding: "2px 20px",
+              padding: { xs: "5px 5px",sm: "2px 20px", md: "2px 20px" },
             }
           : null
       }

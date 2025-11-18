@@ -71,7 +71,7 @@ const Register = () => {
       password,
       full_name: `${firstName} ${lastName}`.trim(),
       country: data?.country,
-      meeting_link: meetingLink, // ✅ added meeting link
+      meeting_link: meetingLink,
     },
   };
 
@@ -87,11 +87,11 @@ const Register = () => {
       }
     );
 
-    console.log("Signup response:", response.data);
+
     setSuccessData("Your account was created successfully!");
 
     // Optional: print meeting link
-    console.log("Generated meeting link:", meetingLink);
+
       setTimeout(() => {
         navigate("/login");
       }, 3000);

@@ -214,8 +214,6 @@ if (redirect === "calendly") {
 
  const handleGoogleSuccess = async (credentialResponse: any) => {
     try {
-
-        
       const decoded: any = jwtDecode(credentialResponse.credential);
        const timestamp = Date.now();
   const safeName = `${decoded.given_name}-${decoded.family_name}`.replace(/\s+/g, "-").toLowerCase();
@@ -243,16 +241,9 @@ if (redirect === "calendly") {
         }
       );
 
-      // ✅ Save returned token & user details to localStorage
-      console.log(response.data.attributes,"meeting link is here")
       localStorage.setItem("user_token", response.data.token);
       localStorage.setItem("first_name", response.data.user.full_name);
-      localStorage.setItem("meet_link", response.data.attributes.meeting_link
-);
-
-
-      
-
+   
       // ✅ Redirect logic
       const redirect = localStorage.getItem("redirectAfterLogin");
 

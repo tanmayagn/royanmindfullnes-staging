@@ -236,7 +236,7 @@ import React, { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, Box, CircularProgress } from "@mui/material";
 import axios from "axios";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 export const Payment = () => {
   const isProcessing = useRef(false);
@@ -247,6 +247,8 @@ export const Payment = () => {
   const { payload, token } = location.state || {};
   const sessionDate = payload?.from_date;
   const sessionTime = payload?.from_time;
+
+  const PAYMENT_AMOUNT_PAISE = 2510400; 
 
   useEffect(() => {
     if (!token || !payload || !sessionDate || !sessionTime) {
@@ -277,25 +279,23 @@ export const Payment = () => {
   const initializeRazorpay = () => {
     const options = {
       key: "rzp_test_FRJjPt3hhMIY1I",
-      amount: 5.09, // paise
-      currency: "USD",
+      amount: PAYMENT_AMOUNT_PAISE, // ✔ Amount in paise
+      currency: "INR",             // ✔ Should be INR
       name: "RoyalMindFulness",
       description: "Trainer Booking Payment",
+
       handler: (response) => {
         if (isProcessing.current || hasVerified.current) return;
         isProcessing.current = true;
         hasVerified.current = true;
-        console.log(response,"responce of [payment >>>>>>>>")
         verifyPayment(response);
       },
+
       modal: {
-        ondismiss: () => {
-          navigate("/error");
-        },
+        ondismiss: () => navigate("/error"),
       },
-      theme: {
-        color: "#1470af",
-      },
+
+      theme: { color: "#1470af" },
     };
 
     const rzp = new window.Razorpay(options);
@@ -307,141 +307,116 @@ export const Payment = () => {
     });
   };
 
- 
-  // Verify payment, then check & book trainer
- const verifyPayment = async (paymentResponse) => {
-  try {
-    // ✅ Get token from localStorage safely
-    const token = localStorage.getItem("user_token");
+  // -------------------------------------------------------
+  // 🔵 Step 2: Verify Payment
+  // -------------------------------------------------------
+  const verifyPayment = async (paymentResponse) => {
+    try {
+      const userToken = localStorage.getItem("user_token");
 
-    if (!token) {
-      alert("User token missing! Please log in again.");
-      return;
+      if (!userToken) {
+        alert("User token missing! Please log in again.");
+        return navigate("/error");
+      }
+
+      const headers = {
+        Authorization: `token ${userToken.trim()}`,
+        "Content-Type": "application/json",
+      };
+
+      const body = {
+        payment_id: paymentResponse.razorpay_payment_id,
+        amount: PAYMENT_AMOUNT_PAISE,             // ✔ MUST MATCH Razorpay amount
+        booking_start_date: sessionDate,
+        booking_start_time: sessionTime,
+      };
+
+      const verifyRes = await axios.post(
+        `https://deedee-unchainable-optionally.ngrok-free.dev/payments/verify_payment`,
+        body,
+        { headers }
+      );
+
+      console.log("Payment verified:", verifyRes.data);
+
+      await bookTrainer();
+      navigate("/success");
+
+    } catch (error) {
+      console.error("❌ Payment verification failed:", error);
+      alert("Payment verification or booking failed.");
+      navigate("/error");
+    } finally {
+      isProcessing.current = false;
     }
+  };
 
-    // ✅ Prepare headers with token
-    const headers = {
-      Authorization: `token ${token.trim()}`, // preferred format
-      "Content-Type": "application/json",
-    };
-
-    // ✅ Prepare request body
-    const payload = {
-      payment_id: paymentResponse.razorpay_payment_id,
-      amount:2510400,
-      booking_start_date: sessionDate,
-      booking_start_time: sessionTime,
-      
-    };
-
-
-    // ✅ Verify payment
-    const verifyRes = await axios.post(
-      `https://deedee-unchainable-optionally.ngrok-free.dev/payments/verify_payment`,
-      payload,
-      { headers }
-    );
-    console.log(verifyRes,">>>>verfiied")
-    // ✅ Proceed with booking
-    await bookTrainer();
-    navigate("/success");
-  } catch (error) {
-    console.error("❌ Payment verification or booking error:", error);
-    alert("Payment verification or booking failed. Please try again.");
-    navigate("/error");
-  } finally {
-    isProcessing.current = false;
-  }
-};
-
-
-  // Call backend to create booking
-  // const bookTrainer = async () => {
-  //   try {
-  //     const headers = { token: token.trim() };
-  //     const res = await axios.post(
-  //       "https://deedee-unchainable-optionally.ngrok-free.dev/trainer_bookings",
-  //       payload,
-  //       { headers }
-  //     );
-  //     console.log("Booking API response:", res.data);
-  //   } catch (error) {
-  //     console.error("Booking API error:", error);
-  //     alert("Booking failed after payment. Please contact support.");
-  //     throw error;
-  //   }
-  // };
-
+  // -------------------------------------------------------
+  // 🔵 Step 3: Book Trainer
+  // -------------------------------------------------------
   const bookTrainer = async () => {
-  try {
-    const headers = { token: token.trim() };
+    try {
+      const headers = { token: token.trim() };
 
-    const res = await axios.post(
-      "https://deedee-unchainable-optionally.ngrok-free.dev/trainer_bookings",
-      payload,
-      { headers }
-    );
+      const res = await axios.post(
+        "https://deedee-unchainable-optionally.ngrok-free.dev/trainer_bookings",
+        payload,
+        { headers }
+      );
 
-    console.log("Booking API response:", res.data);
+      console.log("Booking API response:", res.data);
 
-    const bookingId = res.data?.booking?.id;
-    const booking_start_date = res.data?.booking?.booking_start_date;
-    const booking_start_time = res.data?.booking?.booking_start_time;
-    
-    if (bookingId && booking_start_date && booking_start_time) {
-      await sendMeetingLink(bookingId,booking_start_date,booking_start_time); // ✅ Generate and send meeting link
-    } else {
-      console.warn("No booking ID found in response.");
+      const bookingId = res.data?.booking?.id;
+      const booking_start_date = res.data?.booking?.booking_start_date;
+      const booking_start_time = res.data?.booking?.booking_start_time;
+
+      if (bookingId && booking_start_date && booking_start_time) {
+        await sendMeetingLink(bookingId, booking_start_date, booking_start_time);
+      }
+
+    } catch (error) {
+      console.error("Booking API error:", error);
+      alert("Booking failed after payment.");
+      throw error;
     }
+  };
 
-  } catch (error) {
-    console.error("Booking API error:", error);
-    alert("Booking failed after payment. Please contact support.");
-    throw error;
-  }
-};
+  // -------------------------------------------------------
+  // 🔵 Step 4: Send Meeting Link
+  // -------------------------------------------------------
+  const sendMeetingLink = async (bookingId, booking_start_date, booking_start_time) => {
+    try {
+      const meetingLink = `https://meet.jit.si/session-${bookingId}`;
 
-const sendMeetingLink = async (bookingId,booking_start_date,booking_start_time) => {
-  try {
-    console.log("8888888888888888888888888888",bookingId,booking_start_date,booking_start_time)
-   
-    const meetingLink = `https://meet.jit.si/session-${bookingId}`;
-     const bookingDate = dayjs(booking_start_date).format("YYYYMMDD");
-     const bookingTime = dayjs(booking_start_time, "HH:mm:ss").format("HHmmss");
-     const roomTime = `${bookingDate}_${bookingTime}`;
-    
-     const appId = "vpaas-magic-cookie-40823772f4724e1e9143d917b98679dc";
-     const roomName = `${appId}/${roomTime}`;
-     console.log("9999999999999999999999999999",meetingLink)
-    localStorage.setItem("meeting_link",meetingLink)
-    const headers = {
-      token: token.trim(),
-      "Content-Type": "application/json",
-    };
+      localStorage.setItem("meeting_link", meetingLink);
 
-    await axios.post(
-      "https://deedee-unchainable-optionally.ngrok-free.dev/trainer_bookings/send_meeting_link",
-      {
-        booking_id: bookingId,
-        meeting_link: roomName,
-      },
-      { headers }
-    );
+      const bookingDate = dayjs(booking_start_date).format("YYYYMMDD");
+      const bookingTime = dayjs(booking_start_time, "HH:mm:ss").format("HHmmss");
+      const roomTime = `${bookingDate}_${bookingTime}`;
 
-    console.log("Meeting link sent successfully:", meetingLink);
-  } catch (error) {
-    console.error("Failed to send meeting link:", error);
-  }
-};
+      const appId = "vpaas-magic-cookie-40823772f4724e1e9143d917b98679dc";
+      const roomName = `${appId}/${roomTime}`;
 
+      const headers = {
+        token: token.trim(),
+        "Content-Type": "application/json",
+      };
+
+      await axios.post(
+        "https://deedee-unchainable-optionally.ngrok-free.dev/trainer_bookings/send_meeting_link",
+        { booking_id: bookingId, meeting_link: roomName },
+        { headers }
+      );
+
+      console.log("Meeting link sent:", meetingLink);
+
+    } catch (error) {
+      console.error("Meeting link error:", error);
+    }
+  };
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      style={{ height: "100vh" }}
-    >
+    <Grid container justifyContent="center" alignItems="center" style={{ height: "100vh" }}>
       <Box textAlign="center">
         <CircularProgress />
         <Box mt={2} fontSize="24px" fontFamily="lato">

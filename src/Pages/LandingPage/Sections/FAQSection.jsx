@@ -81,13 +81,30 @@ const FAQSection = () => {
         backgroundColor: "#F9FAFB",
       }}
     >
-      <Container sx={{ padding: { xs: "2rem", md: "6rem" } }}>
-        <Grid container spacing={4} alignItems="center">
+      <Container
+        sx={{
+          padding: { xs: "2rem 1.5rem", md: "6rem 4rem" },
+          maxWidth: "lg",
+        }}
+      >
+        <Grid
+          container
+          spacing={4}
+          alignItems="flex-start"
+          justifyContent="space-between"
+        >
           <Grid item xs={12} md={5}>
             <Typography
               variant="h4"
               fontWeight="bold"
-              sx={{ fontFamily: "lato", fontSize: "80px", fontWeight: 600 }}
+              sx={{
+                fontFamily: "lato",
+                fontSize: { xs: "36px", sm: "48px", md: "56px" },
+                fontWeight: 600,
+                textAlign: { xs: "center", md: "left" },
+                lineHeight: 1.1,
+                mb: { xs: 2, md: 0 },
+              }}
             >
               Frequently Asked Questions
             </Typography>
@@ -105,23 +122,32 @@ const FAQSection = () => {
                   "&:before": { display: "none" },
                 }}
               >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  sx={{
+                    paddingRight: { xs: 0, sm: 2 },
+                    "& .MuiAccordionSummary-content": {
+                      margin: { xs: "8px 0" },
+                    },
+                  }}
+                >
                   <Typography
                     sx={{
                       fontFamily: "lato",
-                      fontSize: "16px",
+                      fontSize: { xs: "15px", sm: "16px" },
                       fontWeight: 600,
                     }}
                   >
                     {faq.question}
                   </Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails sx={{ paddingRight: { xs: 0, sm: 2 } }}>
                   <Typography
                     sx={{
                       fontFamily: "lato",
-                      fontSize: "15px",
+                      fontSize: { xs: "14px", sm: "15px" },
                       fontWeight: 400,
+                      lineHeight: 1.6,
                     }}
                   >
                     {faq.answer}

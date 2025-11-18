@@ -80,7 +80,7 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
           gutterBottom
           sx={{
             marginTop: "2rem",
-            fontSize: "40px",
+            fontSize: { xs: "26px", sm: "32px", md: "40px" },
             fontWeight: "bold",
             color: "#1470AF",
             alignSelf: "baseline",
@@ -90,14 +90,14 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
           Royal Mindfulness vs Traditional Training
         </Typography>
 
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             justifyContent: "center",
-            alignItems: "flex-start",
-            gap: "0px",
-            margin: "3rem",
-            flexWrap: "nowrap", // ✅ force side by side, no stacking
+            alignItems: "stretch",
+            gap: { xs: 3, md: 0 },
+            margin: { xs: "1.5rem 0", md: "3rem" },
           }}
         >
           {/* Feature Card – only on desktop >=900px */}
@@ -106,8 +106,8 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               sx={{
                 border: "1px solid #E5E7EB",
                 borderRadius: "10px",
-                width: "300px",
-                marginRight: "-20px",
+                width: { xs: "100%", sm: "320px", md: "300px" },
+                marginRight: { md: "-20px" },
                 opacity: 0.9,
                 transform: "scale(0.95)",
               }}
@@ -147,7 +147,7 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
             sx={{
               border: "1px solid #E5E7EB",
               borderRadius: "10px",
-              width: "300px",
+              width: { xs: "100%", sm: "320px", md: "300px" },
               backgroundColor: "#cbe6ff",
               zIndex: 2,
               boxShadow: "0px 10px 30px rgba(0,0,0,0.1)",
@@ -191,8 +191,8 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
             sx={{
               border: "1px solid #E5E7EB",
               borderRadius: "10px",
-              width: "300px",
-              marginLeft: "-20px",
+              width: { xs: "100%", sm: "320px", md: "300px" },
+              marginLeft: { md: "-20px" },
               opacity: 0.9,
               transform: "scale(0.95)",
             }}
@@ -225,22 +225,28 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               </CardContent>
             ))}
           </Card>
-        </div>
+        </Box>
 
         {/* Buttons Section */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: { xs: "column", sm: "row" },
               gap: 2,
               justifyContent: "start",
+              width: "100%",
+              maxWidth: 500,
             }}
           >
             <CommonButtons
               label="Book a free consultation"
               height="50px"
-              sx={{ backgroundColor: "#1470AF", color: "white" }}
+              sx={{
+                backgroundColor: "#1470AF",
+                color: "white",
+                width: { xs: "100%", sm: "auto" },
+              }}
               variant="contained"
               onClick={() =>handelConsulation("calendly")}
             />
@@ -249,7 +255,11 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               label="Hire Trainer"
               width="150px"
               height="50px"
-              sx={{ backgroundColor: "#1470AF", color: "white" }}
+              sx={{
+                backgroundColor: "#1470AF",
+                color: "white",
+                width: { xs: "100%", sm: "150px" },
+              }}
               variant="contained"
               onClick={() =>handelConsulation("rozerpay") }
             />

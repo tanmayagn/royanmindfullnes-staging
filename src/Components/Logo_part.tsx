@@ -47,11 +47,11 @@ const Logo_part: React.FC = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            alignItems: "center",
+            alignItems: "center", 
           }}
           className="main_heading_css"
         >
-          <img src={logo} style={{ width: "60px" }} alt="logo" />
+          <img src={logo} style={{ width: "60px" }} alt="logo"   onClick={()=>navigate('/')}/>
           <Typography
             className="main_heading_css"
             style={{ fontFamily: '"Fraunces", serif' }}

@@ -30,15 +30,15 @@ const TrainerCard = () => {
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                padding: "3rem",
+                padding: { xs: "2rem 1.5rem", md: "3rem" },
               }}
             >
               <Typography
                 variant="h6"
-                style={{
-                  fontWeight: "700",
-                  fontSize: "48px",
-                  lineHeight: "50px",
+                sx={{
+                  fontWeight: 700,
+                  fontSize: { xs: "32px", sm: "40px", md: "48px" },
+                  lineHeight: { xs: "36px", md: "50px" },
                   fontFamily: "Instrument sans",
                   color: "#1470AF",
                 }}
@@ -47,11 +47,12 @@ const TrainerCard = () => {
               </Typography>
               <Typography
                 variant="h6"
-                style={{
-                  fontWeight: "400",
-                  fontSize: "18px",
+                sx={{
+                  fontWeight: 400,
+                  fontSize: { xs: "16px", sm: "18px" },
                   marginTop: "2rem",
                   fontFamily: "Instrument sans",
+                  textAlign: { xs: "center", sm: "left" },
                 }}
               >
                 All our instructors are highly qualified with degrees in yoga
@@ -67,13 +68,14 @@ const TrainerCard = () => {
                 holistic well-being, every step of the life.
               </Typography>
               <Typography
-                style={{
-                  fontWeight: "600",
-                  fontSize: "26px",
+                sx={{
+                  fontWeight: 600,
+                  fontSize: { xs: "20px", sm: "24px", md: "26px" },
                   fontStyle: "italic",
                   marginTop: "2rem",
                   fontFamily: "Instrument sans",
                   color: "#1470AF",
+                  textAlign: { xs: "center", sm: "left" },
                 }}
               >
                 "The teacher is one who shows you the way, but you must walk the
@@ -86,7 +88,7 @@ const TrainerCard = () => {
               sx={{
                 height: "100%",
                 display: "flex",
-                padding: "2rem",
+                padding: { xs: "1.5rem 1rem", md: "2rem" },
               }}
             >
               <Grid container spacing={4} direction="column">
@@ -96,7 +98,10 @@ const TrainerCard = () => {
                     item
                     container
                     alignItems="center"
-                    sx={{ gap: "1.5rem",flexWrap:"nowrap" }}
+                    sx={{
+                      gap: "1.5rem",
+                      flexWrap: { xs: "wrap", sm: "nowrap" },
+                    }}
                   >
                     <Box
                       sx={{
@@ -126,7 +131,13 @@ const TrainerCard = () => {
                       />
                     </Box>
 
-                    <Box sx={{flexWrap:"nowrap"}}>
+                    <Box
+                      sx={{
+                        flexWrap: "nowrap",
+                        textAlign: { xs: "center", sm: "left" },
+                        width: { xs: "100%", sm: "auto" },
+                      }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{
@@ -141,7 +152,10 @@ const TrainerCard = () => {
                       >
                         {trainer.name}
                       </Typography>
-                      <Typography variant="body2" sx={{ color: "gray" }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "gray", fontSize: { xs: "0.9rem", sm: "1rem" } }}
+                      >
                         {trainer.title}
                       </Typography>
                     </Box>

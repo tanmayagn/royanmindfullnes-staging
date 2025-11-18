@@ -2,7 +2,7 @@
 import React from "react";
 import { Paper, Typography, Box } from "@mui/material";
 import { styled } from "@mui/system";
-import comparision from "../../Assests/comparision.png";
+import comparision2 from "../../Assests/comparision2.png";
 import CommonButtons from "./CommonButtons";
 import WaveDivider from "./WaveDivider";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ const item = {
   name1: "Mental Fitness Trainer",
   name2: "for Building Inner Strength",
   text: "1-on-1 training, live sessions, free consultation",
-  image: comparision,
+  image: comparision2,
 };
 
 const BannerSection = () => {
@@ -50,7 +50,7 @@ const BannerSection = () => {
   sx={{
     width: "100%",
     height: {
-      xs: "180px",  // ✅ Smaller, fits well on 320–480px devices
+      xs: "320px",  // ✅ Smaller, fits well on 320–480px devices
       sm: "280px",  // ✅ For tablets up to ~768px
       md: "500px",  // ✅ For desktop
     },
@@ -73,7 +73,7 @@ const BannerSection = () => {
         <Typography
           component="h3"
           sx={{
-            fontSize: { xs: "28px", sm: "36px", md: "60px" },
+            fontSize: { xs: "24px", sm: "36px", md: "60px" },
             fontWeight: 700,
             fontFamily:'Mona Sans',
             color: "white",
