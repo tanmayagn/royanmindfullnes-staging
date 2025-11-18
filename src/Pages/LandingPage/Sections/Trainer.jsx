@@ -100,7 +100,7 @@ const TrainerCard = () => {
                     alignItems="center"
                     sx={{
                       gap: "1.5rem",
-                      flexWrap: { xs: "wrap", sm: "nowrap" },
+                      flexWrap: { xs: "nowrap", sm: "nowrap" },
                     }}
                   >
                     <Box
