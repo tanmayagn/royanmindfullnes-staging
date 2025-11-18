@@ -4,7 +4,7 @@ import Img from "../../Assests/p1.js.webp";
 export const AboutUs = () => {
   return (
     <MainWrapper>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" style={{paddingTop:20}}>
         {/* Hero Section */}
         <HeroSection>
           <Overlay />
