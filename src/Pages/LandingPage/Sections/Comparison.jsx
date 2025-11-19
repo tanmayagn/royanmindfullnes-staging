@@ -10,14 +10,11 @@ import {
 } from "@mui/material";
 import CommonButtons from "../CommonButtons";
 import { useNavigate } from "react-router-dom";
-
-
 const data = [
   {
     label: "Frequency",
     myYoga: "Daily/ thrice a week ",
     traditional: "Weekly/Bi-weekly",
-
   },
   {
     label: "Cost",
@@ -45,15 +42,12 @@ const data = [
     traditional: "Healing from mental ailments",
   },
 ];
-
 export const Comparison = () => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up("md")); // >=900px
   const navigate = useNavigate();
-  
   const handelConsulation = (clickedOn: "calendly" | "rozerpay") => {
   const token = localStorage.getItem("user_token");
-
   if (!token) {
     // Save intent before redirecting
     localStorage.setItem("redirectAfterLogin", clickedOn);
@@ -69,8 +63,6 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
     navigate("/book-now");
   }
 };
-  
-
   return (
     <>
       <div style={{ padding: "2rem", textAlign: "center" }}>
@@ -80,7 +72,7 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
           gutterBottom
           sx={{
             marginTop: "2rem",
-            fontSize: { xs: "26px", sm: "32px", md: "40px" },
+            fontSize: "40px",
             fontWeight: "bold",
             color: "#1470AF",
             alignSelf: "baseline",
@@ -89,15 +81,14 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
         >
           Royal Mindfulness vs Traditional Training
         </Typography>
-
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
             justifyContent: "center",
-            alignItems: "stretch",
-            gap: { xs: 3, md: 0 },
-            margin: { xs: "1.5rem 0", md: "3rem" },
+            alignItems: "flex-start",
+            gap: "0px",
+            margin: { xs: "1.5rem 0", md: "3rem" }, // Mobile: 0 left/right, Desktop: 3rem all sides
+            flexWrap: "nowrap",
           }}
         >
           {/* Feature Card – only on desktop >=900px */}
@@ -106,8 +97,8 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               sx={{
                 border: "1px solid #E5E7EB",
                 borderRadius: "10px",
-                width: { xs: "100%", sm: "320px", md: "300px" },
-                marginRight: { md: "-20px" },
+                width: "300px",
+                marginRight: "-20px",
                 opacity: 0.9,
                 transform: "scale(0.95)",
               }}
@@ -141,14 +132,13 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               ))}
             </Card>
           )}
-
           {/* Royal Card – always visible */}
           <Card
             sx={{
               border: "1px solid #E5E7EB",
               borderRadius: "10px",
-              width: { xs: "100%", sm: "320px", md: "300px" },
-              backgroundColor: "#cbe6ff",
+              width: "300px",
+              backgroundColor: "#CBE6FF",
               zIndex: 2,
               boxShadow: "0px 10px 30px rgba(0,0,0,0.1)",
             }}
@@ -185,14 +175,13 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
               </CardContent>
             ))}
           </Card>
-
           {/* Traditional Card – always visible */}
           <Card
             sx={{
               border: "1px solid #E5E7EB",
               borderRadius: "10px",
-              width: { xs: "100%", sm: "320px", md: "300px" },
-              marginLeft: { md: "-20px" },
+              width: "300px",
+              marginLeft: "-20px",
               opacity: 0.9,
               transform: "scale(0.95)",
             }}
@@ -226,47 +215,34 @@ window.open("https://calendly.com/royalmindfulness/30min", "_blank");
             ))}
           </Card>
         </Box>
-
         {/* Buttons Section */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
+              flexDirection: "row",
               gap: 2,
               justifyContent: "start",
-              width: "100%",
-              maxWidth: 500,
             }}
           >
             <CommonButtons
               label="Book a free consultation"
               height="50px"
-              sx={{
-                backgroundColor: "#1470AF",
-                color: "white",
-                width: { xs: "100%", sm: "auto" },
-              }}
+              sx={{ backgroundColor: "#1470AF", color: "white" }}
               variant="contained"
               onClick={() =>handelConsulation("calendly")}
             />
-
             <CommonButtons
               label="Hire Trainer"
               width="150px"
               height="50px"
-              sx={{
-                backgroundColor: "#1470AF",
-                color: "white",
-                width: { xs: "100%", sm: "150px" },
-              }}
+              sx={{ backgroundColor: "#1470AF", color: "white" }}
               variant="contained"
               onClick={() =>handelConsulation("rozerpay") }
             />
           </Box>
         </Box>
       </div>
-
       {/* Background Wave */}
       <Box
         sx={{
