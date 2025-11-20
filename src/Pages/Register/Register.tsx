@@ -43,7 +43,8 @@ const Register = () => {
     mobileNoError: false,
     setPasswordError: false,
     emailErrorMessage: "",
-    country:''
+    country:'',
+    passwordErrorMessage:""
   });
   const [enablePasswordField, setenablePasswordField] = useState(true);
   const [enablePasswordField2, setenablePasswordField2] = useState(true);
@@ -230,23 +231,27 @@ console.log(countryName,"countryName>>>")
     return errorMessage !== "";
   };
 
-  const handlePassword = (value: string, fields: string) => {
-    const passwordPattern =
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const handlePassword = (value:any,fields: string) => {
+  let errorMessage = "";
 
-    const isError = false
-    setData((prev) => {
-      const updated = {
-        ...prev,
-        [fields]: value,
-        [`${fields}Error`]: isError,
-      };
-      handleConfirmPassword(updated.setPassword, value);
-      return updated;
-    });
+  // Standard strong password pattern
+  const passwordPattern =
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    return isError;
-  };
+  if (!value.trim()) {
+    errorMessage = "Please enter password";
+  } else if (!passwordPattern.test(value)) {
+    errorMessage =
+      "Password must be 8+ chars, include upper, lower, number & special character";
+  }
+
+  setData({
+    ...data,
+    password: value,
+    passwordError: errorMessage ? true : false,
+    passwordErrorMessage: errorMessage,
+  });
+};
 
   const handleValidation = () => {
     const emailError = handleEmail(data.email);
@@ -261,7 +266,7 @@ console.log(countryName,"countryName>>>")
       20
     );
     const mobileNoError = handlePhoneNumber(data.mobileNo);
-    const passwordError = handlePassword(data.password, "password");
+    const passwordError:any = handlePassword(data.password,"password");
     const setPasswordError = handleConfirmPassword(
       data.setPassword,
       data.password
@@ -407,7 +412,7 @@ console.log(countryName,"countryName>>>")
             </Typography>
             <InputField
               error={data.passwordError}
-              helperText={data.passwordError }
+             helperText={data.passwordError ? data.passwordErrorMessage : ""}
               style={{ marginBottom: "12px" }}
               placeholder={config.placeHolderPassword}
               data-test-id="txtInputPassword"
@@ -416,7 +421,7 @@ console.log(countryName,"countryName>>>")
               value={data.password}
               variant="outlined"
               onChange={(e: any) =>
-                handlePassword(e.target.value, "password")
+                handlePassword(e.target.value,"")
               }
               InputProps={{
                 endAdornment: (
