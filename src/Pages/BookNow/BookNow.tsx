@@ -377,10 +377,10 @@ const handleChange = (
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: { xs: "column", md: "row" } }}>
       {/* Left side */}
-      <Box sx={{ width: { xs: "100%", md: "35%" }, bgcolor: "#149BD8", p: 4, color: "#fff" }}>
+      <Box sx={{ width: {  md: "35%" }, bgcolor: "#149BD8", p: 4, color: "#fff" }}>
         <Typography
           variant="h3"
-          sx={{ fontWeight: "bold", mb: 3, fontSize: { xs: "1.8rem", md: "4rem" } }}
+          sx={{ fontWeight: "bold", mb: 3, fontSize: { xs: "1.5rem", md: "4rem" } }}
         >
           You’re One Step Away From a Magistical Life
         </Typography>
@@ -409,9 +409,9 @@ const handleChange = (
       </Box>
 
       {/* Right side */}
-      <Box sx={{ width: { xs: "100%", md: "65%" }, bgcolor: "#fef4e8", p: 4 }}>
+      <Box sx={{ width: {  md: "65%" }, bgcolor: "#fef4e8", p: 4 }}>
         <Box sx={{ width: "100%", maxWidth: 500, mx: "auto" }} component="form" onSubmit={handleSubmit}>
-          <Typography variant="h4" sx={{ mb: 2, fontWeight: "bold" }}>
+          <Typography variant="h4" sx={{ mb: 2,fontSize:{xs: "1.3rem"}, fontWeight: "bold" }}>
             Trainer Booking Form
           </Typography>
 
@@ -548,6 +548,8 @@ const handleChange = (
           </LocalizationProvider>
 
           <FormControlLabel
+          onClick={()=>navigate("/term-condition")}
+          style={{textDecoration:"underline"}}
             control={
               <Checkbox
                 checked={formData.termsAccepted}

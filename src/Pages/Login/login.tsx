@@ -243,8 +243,7 @@ if (redirect === "calendly") {
 
       localStorage.setItem("user_token", response.data.token);
       localStorage.setItem("first_name", response.data.user.full_name);
-   
-      // ✅ Redirect logic
+      localStorage.setItem("user_id", response.data.data.id);
       const redirect = localStorage.getItem("redirectAfterLogin");
 
       if (redirect === "calendly") {
@@ -269,7 +268,7 @@ if (redirect === "calendly") {
     localStorage.setItem("first_name", data.data.attributes.first_name);
     localStorage.setItem("last_name", data.data.attributes.last_name);
     localStorage.setItem("email", data.data.attributes.email);
-    localStorage.setItem("user_id", data.data.id);
+
     localStorage.setItem("is_teacher", data.meta.is_teacher);
 
     const redirect = localStorage.getItem("redirectAfterLogin");

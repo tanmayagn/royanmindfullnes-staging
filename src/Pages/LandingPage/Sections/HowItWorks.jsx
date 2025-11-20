@@ -163,14 +163,7 @@ export const HowItWorks = () => {
   const [leftHeight, setLeftHeight] = useState("auto");
   const navigate = useNavigate();
        const handelConsulation = (clickedOn: "calendly" | "rozerpay") => {
-  const token = localStorage.getItem("user_token");
 
-  if (!token) {
-    // Save intent before redirecting
-    localStorage.setItem("redirectAfterLogin", clickedOn);
-    navigate("/login");
-    return;
-  }
   //  navigate("/book-now");  
 
    

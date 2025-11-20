@@ -19,14 +19,6 @@ const BannerSection = () => {
 
 
   const handelConsulation = (clickedOn: "calendly" | "rozerpay") => {
-  const token = localStorage.getItem("user_token");
-
-  if (!token) {
-    // Save intent before redirecting
-    localStorage.setItem("redirectAfterLogin", clickedOn);
-    navigate("/login");
-    return;
-  }
 // window.open("https://calendly.com/royalmindfulness/30min", "_blank");
   // Already logged in → open directly
   if (clickedOn === "calendly") {

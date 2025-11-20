@@ -34,8 +34,6 @@ const Profile = () => {
   const [editableData, setEditableData] = useState({});
   const [errors, setErrors] = useState({});
   const { id } = useParams();
-  const navigate = useNavigate();
- console.log("00000000000000000000000",id)
   useEffect(() => {
     getuserinfo();
   }, []);
@@ -150,9 +148,7 @@ const handleInputChange = (e) => {
     setErrorData("");
   };
 
-  if (!userData) {
-    return <Typography>Loading...</Typography>;
-  }
+ 
   return (
     <Box>
       {errorData != "" && (
@@ -177,7 +173,7 @@ const handleInputChange = (e) => {
               {/* <ProfileName variant="h6"><b>{config.Alex_Meian}</b></ProfileName> */}
               <ProfileName variant="h6">
                 <b>
-                  {userData.first_name} {userData.last_name}
+                  {userData?.first_name} {userData?.last_name}
                 </b>
               </ProfileName>
               <SubHeading>{config.Product_Manager}</SubHeading>
@@ -194,20 +190,20 @@ const handleInputChange = (e) => {
             <IoMailOutline style={{ width: "16px", height: "16px" }} />
             {/* <InfoContent>{config.email}: {config.profile_email}</InfoContent> */}
             <InfoContent>
-              {config.email}: {userData.email}
+              {config?.email}: {userData?.email}
             </InfoContent>
           </EmailInfoBox>
           <PhoneBox>
             <MdPhone style={{ width: "16px", height: "16px" }} />
             {/* <InfoContent>{config.Phone}: {config.Phone_Number}</InfoContent> */}
             <InfoContent>
-              {config.Phone}: {userData.Phone_Number}
+              {config?.Phone}: {userData?.Phone_Number}
             </InfoContent>
           </PhoneBox>
           <AddressBox>
             <AiOutlineHome style={{ width: "16px", height: "16px" }} />
             <InfoContent>
-              {config.Address}: {config.Profile_Address}
+              {config?.Address}: {config?.Profile_Address}
             </InfoContent>
           </AddressBox>
         </CardContent>
@@ -217,7 +213,7 @@ const handleInputChange = (e) => {
   <DialogTitle>Edit Profile</DialogTitle>
   <DialogContent>
     <Typography style={AllStyle.textStyle}>
-      {config.first_name}
+      {config?.first_name}
     </Typography>
     <InputField
       name="first_name"
@@ -231,7 +227,7 @@ const handleInputChange = (e) => {
       helperText={errors.first_name}
     />
     <Typography style={AllStyle.textStyle}>
-      {config.last_name}
+      {config?.last_name}
     </Typography>
     <InputField
       name="last_name"
@@ -245,7 +241,7 @@ const handleInputChange = (e) => {
       helperText={errors.last_name}
     />
     <Typography style={AllStyle.textStyle}>
-      {config.email}
+      {config?.email}
     </Typography>
     <InputField
       name="email"
@@ -253,7 +249,7 @@ const handleInputChange = (e) => {
       variant="outlined"
       margin="dense"
       fullWidth
-      value={editableData.email || ""}
+      value={editableData?.email || ""}
       onChange={handleInputChange}
       InputProps={{ readOnly: true }}
       error={!!errors.email}

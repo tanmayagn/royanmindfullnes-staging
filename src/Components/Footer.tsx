@@ -138,7 +138,7 @@
 //   );
 // };
 
-// export default Footer;
+// export default Footer; 
 
 
 import React from "react";
@@ -214,7 +214,6 @@ const Footer = () => {
           peace starts here!"
         </Typography>
       </Box>
-
       {/* Quick Links */}
       <Box sx={{ flex: 1, minWidth: 200 }}>
         <Typography variant="subtitle1" gutterBottom>
@@ -223,15 +222,13 @@ const Footer = () => {
         <List sx={{ listStyleType: "disc", pl: 2 }}>
           {[
             { name: "About Us", link: "/aboutus" },
-            { name: "Terms & Condition", link: "/term-condition" },
-            { name: "Privacy Policy", link: "/privacy-policy" },
             { name: "Contact Us", link: "/contact" },
-            { name: "Webinar", link: "/webinar" },
-            {
+              {
               name: "Blogs",
               link: "https://tanmaysmarty.wixsite.com/my-site-1/blog",
             },
-            { name: "Refund/Cancellation", link: "/refund-cancellation" },
+             { name: "Privacy policy", link: "/privacy-policy" },
+            { name: "Terms & Conditions", link: "/term-condition" },
           ].map((item) => (
             <ListItem
               key={item.name}

@@ -47,13 +47,7 @@ export const Comparison = () => {
   const isMd = useMediaQuery(theme.breakpoints.up("md")); // >=900px
   const navigate = useNavigate();
   const handelConsulation = (clickedOn: "calendly" | "rozerpay") => {
-  const token = localStorage.getItem("user_token");
-  if (!token) {
-    // Save intent before redirecting
-    localStorage.setItem("redirectAfterLogin", clickedOn);
-    navigate("/login");
-    return;
-  }
+
   //  navigate("/book-now");
 window.open("https://calendly.com/royalmindfulness/30min", "_blank");
   // Already logged in → open directly

@@ -86,14 +86,7 @@ const Dashboard = () => {
           </ProfilePaymentGrid>
         </Grid>
 
-        <BoxGrid container spacing={2} mt={0.5} md={12} sm={12} lg={12}>
-          <Grid className="innergrid" item xs={12} md={12} lg={6}>
-            <TopPerformers />
-          </Grid>
-          <Grid className="innergrid" item xs={12} md={12} lg={6}>
-            <UserBatchPerformance />
-          </Grid>
-        </BoxGrid>
+        
       </GridContainer>
     </Grid>
   );
