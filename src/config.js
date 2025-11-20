@@ -215,7 +215,7 @@ exports.drawerItems = [
 
   // { name: "Blogs", link: "/blogs" },
 
-  { name: "Book now", link: "/pricing-plans" },
+  { name: "Book now", link: "/book-now" },
   
   { name: "About us", link: "/aboutus" },
   { name: "Contact us", link: "/contact" },

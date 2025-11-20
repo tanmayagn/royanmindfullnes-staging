@@ -377,36 +377,59 @@ const handleChange = (
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: { xs: "column", md: "row" } }}>
       {/* Left side */}
-      <Box sx={{ width: {  md: "35%" }, bgcolor: "#149BD8", p: 4, color: "#fff" }}>
-        <Typography
-          variant="h3"
-          sx={{ fontWeight: "bold", mb: 3, fontSize: { xs: "1.5rem", md: "4rem" } }}
-        >
-          You’re One Step Away From a Magistical Life
-        </Typography>
-        <Typography variant="h6" sx={{ lineHeight: 1.5, fontSize: { xs: "1rem", md: "1.25rem" } }}>
-          <Typewriter
-            words={[
-              "Reduce stress, increase focus, and build sheer strength.",
-              "Cultivate calm, command clarity, and conquer your inner chaos.",
-              "Stay poised, powerful, and profoundly present.",
-              "Journey from overthinking to mental mastery.",
-              "Amplify awareness, and move with sovereign strength.",
-              "Build royal resilience, disciplined thought, and unshakable calm.",
-              "Rule your reactions, reclaim your peace, and rise like a monarch.",
-              "From chaos to command.",
-              "Stillness breeds supremacy.",
-              "Be fierce. Be still. Be royal.",
-            ]}
-            loop={0}
-            cursor
-            cursorStyle="|"
-            typeSpeed={50}
-            deleteSpeed={30}
-            delaySpeed={2000}
-          />
-        </Typography>
-      </Box>
+      <Box
+  sx={{
+    width: { md: "35%" },
+    bgcolor: "#149BD8",
+    p: 4,
+    color: "#fff",
+  }}
+>
+  <Typography
+    variant="h3"
+    sx={{ fontWeight: "bold", mb: 3, fontSize: { xs: "1.5rem", md: "4rem" } }}
+  >
+    You’re One Step Away From a Magistical Life
+  </Typography>
+
+  {/* FIXED HEIGHT WRAPPER */}
+  <Box
+    sx={{
+      height: { xs: "70px", md: "90px" },   // adjust as needed
+      overflow: "hidden",
+    }}
+  >
+    <Typography
+      variant="h6"
+      sx={{
+        lineHeight: 1.2,
+        fontSize: { xs: "1rem", md: "1.25rem" },
+      }}
+    >
+      <Typewriter
+        words={[
+          "Reduce stress, increase focus, and build sheer strength.",
+          "Cultivate calm, command clarity, and conquer your inner chaos.",
+          "Stay poised, powerful, and profoundly present.",
+          "Journey from overthinking to mental mastery.",
+          "Amplify awareness, and move with sovereign strength.",
+          "Build royal resilience, disciplined thought, and unshakable calm.",
+          "Rule your reactions, reclaim your peace, and rise like a monarch.",
+          "From chaos to command.",
+          "Stillness breeds supremacy.",
+          "Be fierce. Be still. Be royal.",
+        ]}
+        loop={0}
+        cursor
+        cursorStyle="|"
+        typeSpeed={50}
+        deleteSpeed={30}
+        delaySpeed={2000}
+      />
+    </Typography>
+  </Box>
+</Box>
+
 
       {/* Right side */}
       <Box sx={{ width: {  md: "65%" }, bgcolor: "#fef4e8", p: 4 }}>
@@ -547,18 +570,24 @@ const handleChange = (
             />
           </LocalizationProvider>
 
-          <FormControlLabel
-          onClick={()=>navigate("/term-condition")}
-          style={{textDecoration:"underline"}}
-            control={
-              <Checkbox
-                checked={formData.termsAccepted}
-                onChange={handleChange}
-                name="termsAccepted"
-              />
-            }
-            label="I agree to terms and conditions"
-          />
+         <FormControlLabel
+  control={
+    <Checkbox
+      checked={formData.termsAccepted}
+      onChange={handleChange}
+      name="termsAccepted"
+    />
+  }
+  label={
+    <span 
+      style={{ textDecoration: "underline", cursor: "pointer" }}
+      onClick={() => navigate("/term-condition")}
+    >
+      I agree to terms and conditions
+    </span>
+  }
+/>
+
           {errors.termsAccepted && (
             <Typography color="error" variant="caption" display="block" mb={1}>
               {errors.termsAccepted}
